@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Adding data</title>
+	<link rel="stylesheet" type="text/css" href="css/adding_cards.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div id="container" class="container">
+  <h2>Create Card</h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-default btn-lg" id="myBtn">Create</button>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4>Create Card</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form">
+            <div class="form-group">
+              <label for="image">Image</label>
+              <input type="text" class="form-control" id="image" placeholder="Image Name">
+            </div>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" class="form-control" id="title" placeholder="Enter Title">
+            </div>
+            <div class="form-group">
+              <label for="content">Content</label>
+              <textarea type="text" class="form-control" id="content" placeholder="Enter Content"></textarea> 
+            </div>
+            <div class="form-group">
+              <label for="link">Link</label>
+              <input type="text" class="form-control" id="link" placeholder="Enter Link with .html">
+            </div>
+              <button id ="btnSave" class="btn btn-success btn-blocks" onclick="card_saver();return false;">Create</button>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+</div>
+<div id="main_div"></div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+  $("#myBtn").click(function(){
+    $("#myModal").modal();
+    $('#btnSave').click(function() {
+   $('#myModal').modal('hide');
+});
+  });
+});
+   document.getElementById('main_div').innerHTML += '<div class ="cards"><img src="image/js.jpeg">'+'<h1 class="h1">' + "Learning JS" + '</h1><p>' + "JavaScript is a text-based programming language used both on the client-side and server-side that allows you to make web pages interactive." + '</p><a href= " ' + "js_cards.html"+ '" target="blank">READ MORE</a><i class="fa fa-2x fa-heart">' + '</i><i class="fa fa-2x fa-share-alt i1">' + '</i></div>';
+
+      var data = [];
+      var storedNames = JSON.parse(localStorage.getItem("data"));
+      for (var i = 0; i < storedNames.length; i++) 
+			{ 
+
+      document.getElementById('main_div').innerHTML += '<div class ="cards"><img src="'+storedNames[i].image+'">'+'<h1 class="h1">' + storedNames[i].title + '</h1><p>' + storedNames[i].content + '</p><a href= " ' + storedNames[i].link+ '" target="blank">READ MORE</a><i class="fa fa-2x fa-heart">' + '</i><i class="fa fa-2x fa-share-alt i1">' + '</i></div>';
+			}
+			function card_saver() {
+				  if (storedNames !== null) 
+      {
+					for (var i = 0; i < storedNames.length; i++) 
+          {
+					     data.push(storedNames[i]);
+					}
+				var image = document.getElementById('image').value;
+				var title = document.getElementById('title').value;
+				var content = document.getElementById('content').value;
+				var link = document.getElementById('link').value;
+        data.push({image : image, title : title, content : content, link : link})
+				localStorage.setItem("data", JSON.stringify(data));
+				location.reload();
+			}else{ 
+    				var image = document.getElementById('image').value;
+    				var title = document.getElementById('title').value;
+    				var content = document.getElementById('content').value;
+    				var link = document.getElementById('link').value;
+    				data.push({image : image, title : title, content : content, link : link});
+    				localStorage.setItem("data", JSON.stringify(data));
+    				location.reload();
+		      }
+}
+ window.addEventListener('scroll',function() {
+       var header = document.getElementById('container');
+       header.classList.toggle('sticky',window.scrollY > 0);
+     })
+</script>
+</body>
+</html>

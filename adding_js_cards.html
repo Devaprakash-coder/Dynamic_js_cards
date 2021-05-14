@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adding_JS_cards</title>
+    <link rel="stylesheet" type="text/css" href="css/adding_js_cards.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="container" class="container">
+  <h3>Create Card</h3>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-default btn-lg" id="myBtn">Create</button>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4>Create Card</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form">
+            <div class="form-group">
+              <label for="heading">Task Heading</label>
+              <input type="text" class="form-control" id="heading" placeholder="Task Heading">
+            </div>
+            <div class="form-group">
+              <label for="definition">Definition</label>
+              <input type="text" class="form-control" id="definition" value="Definition:">
+            </div>
+            <div class="form-group">
+              <label for="content">Content</label>
+              <textarea type="text" class="form-control" id="content" placeholder="Enter Content"></textarea> 
+            </div>
+            <div class="form-group">
+              <label for="link">Link</label>
+              <input type="text" class="form-control" id="link" placeholder="Enter Link with .html">
+            </div>
+              <button id ="btnSave" class="btn btn-success btn-blocks" onclick="card_saver();return false;">Create</button>
+          </form>
+        </div>
+      </div>  
+    </div>
+  </div> 
+</div>
+<div id="main_div"></div>
+
+    <script type="text/javascript">
+            $(document).ready(function(){
+              $("#myBtn").click(function(){
+                $("#myModal").modal();
+                $('#btnSave').click(function() {
+               $('#myModal').modal('hide');
+            });
+              });
+            });
+
+      var js_data = [];
+      var storedNames = JSON.parse(localStorage.getItem("js_data"));
+      for (var i = 0; i < storedNames.length; i++) 
+      { 
+      document.getElementById('main_div').innerHTML += '<div class ="cards"><h1>' + storedNames[i].heading + '</h1><h2>' + storedNames[i].definition + '</h2><p>' + storedNames[i].content + '</p><a href= " ' + storedNames[i].link+ '">VEIW CODE</a><i class="fa fa-2x fa-heart">' + '</i><i class="fa fa-2x fa-share-alt i1">' + '</i></div>';
+      }
+      function card_saver() {
+          if (storedNames !== null) 
+      {
+          for (var i = 0; i < storedNames.length; i++) 
+          {
+               js_data.push(storedNames[i]);
+          }
+        var heading = document.getElementById('heading').value;
+        var definition = document.getElementById('definition').value;
+        var content = document.getElementById('content').value;
+        var link = document.getElementById('link').value;
+        js_data.push({heading : heading, definition : definition, content : content, link : link})
+        localStorage.setItem("js_data", JSON.stringify(js_data));
+        location.reload();
+      }else{ 
+            var heading = document.getElementById('heading').value;
+            var definition = document.getElementById('definition').value;
+            var content = document.getElementById('content').value;
+            var link = document.getElementById('link').value;
+            js_data.push({heading : heading, definition : definition, content : content, link : link});
+            localStorage.setItem("js_data", JSON.stringify(js_data));
+            location.reload();
+          }
+}
+       window.addEventListener('scroll',function() {
+       var header = document.getElementById('container');
+       header.classList.toggle('sticky',window.scrollY > 0);
+     })
+    </script>
+
+</body>
+</html>

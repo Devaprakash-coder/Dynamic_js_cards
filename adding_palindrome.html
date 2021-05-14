@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Palindrome_code</title>
+	<link rel="stylesheet" type="text/css" href="css/codes.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div id="container" class="container">
+  <h3>Create Code</h3>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-default btn-lg" id="myBtn">Create</button>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4>Create Code</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form">
+            <div class="form-group">
+              <label for="heading">Task Heading</label>
+              <input type="text" class="form-control" id="heading" placeholder="Task Heading">
+            </div>
+            <div class="form-group">
+              <label for="definition">Definition</label>
+              <input type="text" class="form-control" id="definition" value="Definition:">
+            </div>
+            <div class="form-group">
+              <label for="content">Content</label>
+              <textarea type="text" class="form-control" id="content" placeholder="Enter Content"></textarea> 
+            </div>
+            <div class="form-group">
+              <label for="code_title">Code Title</label>
+              <input type="text" class="form-control" id="code_title" value="Code:">
+            </div>
+            <div class="form-group">
+              <label for="code">Code</label>
+              <textarea type="text" class="form-control" id="code" placeholder="Enter Code"></textarea> 
+            </div>
+            <div class="form-group">
+              <label for="temp_heading">Temp Heading</label>
+              <input type="text" class="form-control" id="temp_heading" placeholder="Task Heading">
+            </div>
+            <div class="form-group">
+              <label for="temp_definition">Definition</label>
+              <input type="text" class="form-control" id="temp_definition" value="Definition:">
+            </div>
+            <div class="form-group">
+              <label for="temp_content">Content</label>
+              <textarea type="text" class="form-control" id="temp_content" placeholder="Enter Content"></textarea> 
+            </div>
+            <div class="form-group">
+             <label for="result">Result</label>
+              <input type="text" class="form-control" id="result" value="Result:">
+            </div>
+            <div class="form-group">
+              <label for="result_content">Content</label>
+              <textarea type="text" class="form-control" id="result_content" placeholder="Enter Content"></textarea> 
+            </div>
+              <button id ="btnSave" class="btn btn-success btn-blocks" onclick="card_saver();return false;">Create</button>
+          </form>
+        </div>
+      </div>  
+    </div>
+  </div> 
+</div>
+<div id="container1">
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+              $("#myBtn").click(function(){
+                $("#myModal").modal();
+                $('#btnSave').click(function() {
+               $('#myModal').modal('hide');
+            });
+              });
+            });
+
+			      var palindrome = [];
+      var storedNames = JSON.parse(localStorage.getItem("palindrome"));
+      for (var i = 0; i < storedNames.length; i++) 
+      { 
+      document.getElementById('container1').innerHTML += '<div class ="task"><h1>' + storedNames[i].heading + '</h1><h2>' + storedNames[i].definition + '</h2><p>' + storedNames[i].content + '</p></div><div class ="temp"><h1>' + storedNames[i].temp_heading + '</h1><h2>' + storedNames[i].temp_definition + '</h2><p>' + storedNames[i].temp_content + '</p></div><div class ="code"><h1>' + storedNames[i].code_title + '</h1><pre>' + storedNames[i].code + '</pre></div><div class ="result"><h1>' + storedNames[i].result + '</h1><p>' + storedNames[i].result_content + '</p></div>';
+
+      }
+      function card_saver() {
+          if (storedNames !== null) 
+      {
+          for (var i = 0; i < storedNames.length; i++) 
+          {
+               palindrome.push(storedNames[i]);
+          }
+        var heading = document.getElementById('heading').value;
+        var definition = document.getElementById('definition').value;
+        var content = document.getElementById('content').value;
+        var code_title = document.getElementById('code_title').value;
+        var code = document.getElementById('code').value;
+        var temp_heading = document.getElementById('temp_heading').value;
+        var temp_definition = document.getElementById('temp_definition').value;
+        var temp_content = document.getElementById('temp_content').value;
+        var result = document.getElementById('result').value;
+        var result_content = document.getElementById('result_content').value;
+        palindrome.push(
+        	{heading : heading, definition : definition, content : content, code_title : code_title, code : code, temp_heading : temp_heading, temp_definition : temp_definition, temp_content : temp_content, result : result, result_content : result_content});
+        localStorage.setItem("palindrome", JSON.stringify(palindrome));
+        location.reload();
+      }else{ 
+            var heading = document.getElementById('heading').value;
+        var definition = document.getElementById('definition').value;
+        var content = document.getElementById('content').value;
+        var code_title = document.getElementById('code_title').value;
+        var code = document.getElementById('code').value;
+        var temp_heading = document.getElementById('temp_heading').value;
+        var temp_definition = document.getElementById('temp_definition').value;
+        var temp_content = document.getElementById('temp_content').value;
+        var result = document.getElementById('result').value;
+        var result_content = document.getElementById('result_content').value;
+        palindrome.push(
+        	{heading : heading, definition : definition, content : content, code_title : code_title, code : code, temp_heading : temp_heading, temp_definition : temp_definition, temp_content : temp_content, result : result, result_content : result_content});
+        localStorage.setItem("palindrome", JSON.stringify(palindrome));
+        location.reload();
+          }
+}
+       window.addEventListener('scroll',function() {
+       var header = document.getElementById('container');
+       header.classList.toggle('sticky',window.scrollY > 0);
+     })
+</script>
+</body>
+</html>
